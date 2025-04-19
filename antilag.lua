@@ -1,5 +1,4 @@
-task.wait(5)
---[[ Ultimate Anti‑Lag LocalScript ]]--
+
 local RunService    = game:GetService("RunService")
 local Players       = game:GetService("Players")
 local Lighting      = game:GetService("Lighting")
@@ -30,7 +29,7 @@ label.Text = [[Disclaimer
 this script will completely change the following properties / instances
 Material, Surfaces, RenderFidelity, CastShadow, GlobalShadow, Enabled
 ParticleEmitter, Beam, Trail, Decal, Texture
-and this will force your client to lower rendering quality]]
+and this will force your client (if supported) to lower rendering quality]]
 local stroke = Instance.new("UIStroke", label)
 stroke.Color = Color3.new(0,0,0)
 stroke.Thickness = 3
