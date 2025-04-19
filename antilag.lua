@@ -10,11 +10,33 @@ local player = Players.LocalPlayer
 local SHOW_FPS       = true              -- show FPS counter?
 local QUALITY_LEVEL  = 1                 -- 1=lowest, 10=highest
 
--- ========== SETTINGS ========== --
--- sharpen up any textures (forces lower mip levels)
-pcall(function()
-	ContentP:SetBaseMipLevel(4)
-end)
+
+local lastgui = CoreGui:FindFirstChild("de_fpsboosterlolz")
+if lastgui then
+    lastgui:Destroy()
+end
+local gui = Instance.new("ScreenGui", CoreGui)
+gui.Name = "de_fpsboosterlolz"
+gui.ResetOnSpawn = false
+
+
+local label = Instance.new("TextLabel", gui)
+label.Size = UDim2.new(1,0,1,0)
+label.BackgroundTransparency = 1
+label.Font = Enum.Font.FredokaOne
+label.TextColor3 = Color3.new(1,1,1)
+label.TextScaled = true
+label.Text = [[Disclaimer
+this script will completely change the following properties / instances
+Material, Surfaces, RenderFidelity, CastShadow, GlobalShadow, Enabled
+ParticleEmitter, Beam, Trail, Decal, Texture
+and this will force your client to lower rendering quality]]
+local stroke = Instance.new("UIStroke", label)
+stroke.Color = Color3.new(0,0,0)
+stroke.Thickness = 3
+stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
+task.wait(5)
+label:Destroy()
 -- harsh lighting settings
 Lighting.GlobalShadows = false
 
@@ -80,30 +102,24 @@ Players.PlayerAdded:Connect(function(plr)
 end)
 
 -- ========== FPS COUNTER ========== --
-	local gui = Instance.new("ScreenGui", CoreGui)
-	gui.Name = tostring(math.random(0,9999)..math.random(0,9999))
-	gui.ResetOnSpawn = false
 
 	fpsLabel = Instance.new("TextLabel", gui)
-	fpsLabel.Size            = UDim2.new(0.1,0,0.1,0)
+	fpsLabel.Size            = UDim2.new(0.05,0,0.05,0)
 	fpsLabel.Position        = UDim2.new(0,0,0,0)
 	fpsLabel.BackgroundTransparency = 1
 	fpsLabel.TextScaled      = true
 	fpsLabel.Font            = Enum.Font.FredokaOne
 	fpsLabel.TextColor3      = Color3.new(1,1,1)
 	fpsLabel.Text            = "fps booster!!"
-for i = 1, 5 do
-	fpsLabel.TextTransparency = 1
-	task.wait(0.1)
-	fpsLabel.TextTransparency = 0
-end
 
-fpsLabel.Text = "by someoneus"
-task.wait(0.1)
+local stroke = Instance.new("UIStroke", fpsLabel)
+stroke.Color = Color3.new(0,0,0)
+stroke.Thickness = 3
+stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
 
 local frameCount, lastTime = 0, tick()
 RunService.RenderStepped:Connect(function()
-	if show and fpsLabel then
+	if fpsLabel then
 		frameCount += 1
 		local now = tick()
 		if now - lastTime >= 1 then
@@ -116,6 +132,5 @@ end)
 
 		Lighting.GlobalShadows = false
 		if settings().Rendering then
-			settings().Rendering.QualityLevel = show and QUALITY_LEVEL or 10
+			settings().Rendering.QualityLevel = true and QUALITY_LEVEL or 10
 		end
-
